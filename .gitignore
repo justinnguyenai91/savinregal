@@ -39,3 +39,27 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+/src/generated/prisma
+
+# uploaded files
+/public/uploads/
+
+# local database
+dev.db
+
+# deploy scripts & logs
+deploy.py
+ssh-output-deploy.txt
+docker-compose.prod.yml
+.env.prod
+
+# gh CLI (temp)
+gh.zip
+gh_cli/
+
+# misc temp files
+page.html
+script.js
+init_db.py
+insert_blog.js
