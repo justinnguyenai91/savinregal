@@ -10,3 +10,5 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   // BUT /admin/login is inside /admin/login/page.tsx, which ALSO uses this layout!
   // If we redirect to /admin/login here, and /admin/login uses this layout, it causes an infinite redirect loop!
 
+  return <AdminLayoutClient>{children}</AdminLayoutClient>;
+}
