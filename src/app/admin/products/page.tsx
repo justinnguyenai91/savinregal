@@ -457,7 +457,13 @@ export default function AdminProductsPage() {
                 <td>
                   <div className="flex items-center gap-3">
                     <div className="w-12 h-12 rounded-lg overflow-hidden flex items-center justify-center" style={{ background: '#FAF6EF', border: '1px solid #E8DDD0' }}>
-                      <img src="/placeholder.png" alt={product.name} style={{width:'85%',height:'85%',objectFit:'contain'}} />
+                      {(() => {
+                        const imgUrl = product.images?.[0];
+                        const src = imgUrl
+                          ? (imgUrl.startsWith('http') ? `/_next/image?url=${encodeURIComponent(imgUrl)}&w=96&q=75` : imgUrl)
+                          : '/placeholder.png';
+                        return <img src={src} alt={product.name} style={{width:'100%',height:'100%',objectFit:'cover'}} onError={e => { (e.currentTarget as HTMLImageElement).src = '/placeholder.png'; }} />;
+                      })()}
                     </div>
                     <div>
                       <p className="text-sm font-medium max-w-56 truncate" style={{color:'#111714'}}>{product.name}</p>

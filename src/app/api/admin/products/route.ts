@@ -47,7 +47,18 @@ export async function POST(request: Request) {
     const product = await prisma.product.create({
       data: {
         name: body.name,
-        slug: body.slug || body.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+        slug: body.slug || (() => {
+          // Chuẩn hóa tiếng Việt: bỏ dấu → slug ASCII
+          const base = body.name
+            .normalize('NFD')                    // tách dấu ra khỏi ký tự
+            .replace(/[\u0300-\u036f]/g, '')     // xóa dấu
+            .replace(/[đĐ]/g, 'd')               // đ → d
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/(^-|-$)/g, '');
+          // Thêm timestamp để đảm bảo unique
+          return `${base}-${Date.now().toString(36)}`;
+        })(),
         shortDescription: body.shortDescription || '',
         description: body.description || '',
         price: parseFloat(body.price),
