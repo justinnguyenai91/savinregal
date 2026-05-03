@@ -459,8 +459,8 @@ export default function AdminProductsPage() {
                     <div className="w-12 h-12 rounded-lg overflow-hidden flex items-center justify-center" style={{ background: '#FAF6EF', border: '1px solid #E8DDD0' }}>
                       {(() => {
                         const imgUrl = product.images?.[0];
-                        const src = imgUrl
-                          ? (imgUrl.startsWith('http') ? `/api/img?url=${encodeURIComponent(imgUrl)}` : imgUrl)
+                        const src = imgUrl?.startsWith('https://') ? imgUrl
+                          : imgUrl?.startsWith('http://') ? `/api/img?url=${encodeURIComponent(imgUrl)}`
                           : '/placeholder.png';
                         return <img src={src} alt={product.name} style={{width:'100%',height:'100%',objectFit:'cover'}} onError={e => { (e.currentTarget as HTMLImageElement).src = '/placeholder.png'; }} />;
                       })()}

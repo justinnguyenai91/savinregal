@@ -54,11 +54,14 @@ export async function POST(request: NextRequest) {
 
       const data = await res.json();
       if (res.ok && data.urls) {
-        // Chuyển VPS URL thành Vercel proxy URL (HTTPS) để lưu vào DB
         const vercelUrl = process.env.NEXTAUTH_URL || 'https://savinregal.vercel.app';
-        data.urls = (data.urls as string[]).map((vpsUrl: string) =>
-          `${vercelUrl}/api/img?url=${encodeURIComponent(vpsUrl)}`
-        );
+        data.urls = (data.urls as string[]).map((vpsUrl: string) => {
+          // Force port 8081 (nginx media) kể cả khi VPS code cũ trả về port 8080
+          const mediaUrl = vpsUrl
+            .replace('180.93.113.12:8080/uploads/', '180.93.113.12:8081/uploads/')
+            .replace('180.93.113.12:8080/uploads/', '180.93.113.12:8081/uploads/');
+          return `${vercelUrl}/api/img?url=${encodeURIComponent(mediaUrl)}`;
+        });
       }
       return NextResponse.json(data, { status: res.status });
     }
