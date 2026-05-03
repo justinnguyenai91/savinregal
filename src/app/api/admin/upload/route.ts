@@ -53,6 +53,13 @@ export async function POST(request: NextRequest) {
       });
 
       const data = await res.json();
+      if (res.ok && data.urls) {
+        // Chuyển VPS URL thành Vercel proxy URL (HTTPS) để lưu vào DB
+        const vercelUrl = process.env.NEXTAUTH_URL || 'https://savinregal.vercel.app';
+        data.urls = (data.urls as string[]).map((vpsUrl: string) =>
+          `${vercelUrl}/api/img?url=${encodeURIComponent(vpsUrl)}`
+        );
+      }
       return NextResponse.json(data, { status: res.status });
     }
 
