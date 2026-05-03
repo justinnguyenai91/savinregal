@@ -37,13 +37,13 @@ export default function ProductCard({ product }: ProductCardProps) {
         <div className="w-full h-full flex items-center justify-center overflow-hidden transition-transform duration-500 group-hover:scale-105"
           style={{ background: '#FAF6EF' }}>
           <img
-            src={categoryImageMap[product.categorySlug] || '/placeholder.png'}
-            alt={product.category}
+            src={product.images?.[0] || categoryImageMap[product.categorySlug] || '/placeholder.png'}
+            alt={product.name}
             style={{
               width: '100%', height: '100%',
-              objectFit: categoryImageMap[product.categorySlug] ? 'cover' : 'contain',
+              objectFit: (product.images?.[0] || categoryImageMap[product.categorySlug]) ? 'cover' : 'contain',
               objectPosition: 'center',
-              padding: categoryImageMap[product.categorySlug] ? 0 : '1rem',
+              padding: (product.images?.[0] || categoryImageMap[product.categorySlug]) ? 0 : '1rem',
             }}
           />
         </div>

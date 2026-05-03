@@ -113,15 +113,17 @@ export default function ProductDetailPage() {
             {/* LEFT: Image */}
             <div className="space-y-4">
               <div className="aspect-square bg-white rounded-2xl shadow-sm flex items-center justify-center overflow-hidden" style={{border:'1px solid #E8DDD0'}}>
-                <img src="/placeholder.png" alt={product.name} style={{width:'75%',height:'75%',objectFit:'contain'}} />
+                <img src={product.images?.[0] || "/placeholder.png"} alt={product.name} style={{width:'100%',height:'100%',objectFit:'contain'}} />
               </div>
-              <div className="grid grid-cols-3 gap-3">
-                {[0, 1, 2].map(i => (
-                  <div key={i} className="aspect-square bg-white rounded-xl shadow-sm flex items-center justify-center cursor-pointer transition-all" style={{border:'1px solid #E8DDD0'}}>
-                    <img src="/placeholder.png" alt="" style={{width:'70%',height:'70%',objectFit:'contain',opacity:0.6}} />
-                  </div>
-                ))}
-              </div>
+              {product.images && product.images.length > 1 && (
+                <div className="grid grid-cols-3 gap-3">
+                  {product.images.slice(1, 4).map((img, i) => (
+                    <div key={i} className="aspect-square bg-white rounded-xl shadow-sm flex items-center justify-center cursor-pointer transition-all hover:border-forest-light" style={{border:'1px solid #E8DDD0'}}>
+                      <img src={img} alt="" style={{width:'100%',height:'100%',objectFit:'contain'}} />
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* RIGHT: Product Info */}
