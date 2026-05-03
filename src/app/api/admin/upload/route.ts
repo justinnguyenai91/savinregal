@@ -71,8 +71,8 @@ export async function POST(request: NextRequest) {
       const buffer = Buffer.from(bytes);
       await writeFile(filePath, buffer);
 
-      // Trả về URL tuyệt đối với VPS IP để Vercel có thể dùng remotePatterns
-      const vpsBaseUrl = process.env.NEXTAUTH_URL || 'http://180.93.113.12:8080';
+      // Trả về URL tự VPS media nginx (port 8081) để Vercel lưu vào DB
+      const vpsBaseUrl = process.env.VPS_MEDIA_URL || 'http://180.93.113.12:8081';
       urls.push(`${vpsBaseUrl}/uploads/${safeName}`);
     }
 

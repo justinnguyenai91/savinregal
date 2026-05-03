@@ -11,10 +11,10 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        // VPS upload server - Next.js Image sẽ proxy HTTP→HTTPS tự động
+        // savinregal_media nginx - serve ảnh tĩnh port 8081
         protocol: 'http',
         hostname: '180.93.113.12',
-        port: '8080',
+        port: '8081',
         pathname: '/uploads/**',
       },
     ],

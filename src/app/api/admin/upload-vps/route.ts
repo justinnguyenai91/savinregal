@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
     await mkdir(uploadDir, { recursive: true });
 
     const urls: string[] = [];
-    const vpsBaseUrl = process.env.NEXTAUTH_URL || 'http://180.93.113.12:8080';
+    const vpsBaseUrl = process.env.VPS_MEDIA_URL || 'http://180.93.113.12:8081';
 
     for (const file of files) {
       if (!file || file.size === 0) continue;
