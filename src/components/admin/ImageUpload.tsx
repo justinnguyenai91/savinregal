@@ -68,9 +68,9 @@ export default function ImageUpload({ value, onChange, multiple = false, label =
       {images.length > 0 && (
         <div className="flex flex-wrap gap-3 mb-3">
           {images.map((url, i) => {
-            // Dùng /_next/image để proxy HTTP VPS images qua HTTPS (tránh mixed content)
+            // Dùng /api/img proxy để tránh mixed content và remotePatterns issues
             const displayUrl = url.startsWith('http')
-              ? `/_next/image?url=${encodeURIComponent(url)}&w=200&q=75`
+              ? `/api/img?url=${encodeURIComponent(url)}`
               : url;
             return (
               <div key={i} className="relative group">

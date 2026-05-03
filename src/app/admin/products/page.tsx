@@ -460,7 +460,7 @@ export default function AdminProductsPage() {
                       {(() => {
                         const imgUrl = product.images?.[0];
                         const src = imgUrl
-                          ? (imgUrl.startsWith('http') ? `/_next/image?url=${encodeURIComponent(imgUrl)}&w=96&q=75` : imgUrl)
+                          ? (imgUrl.startsWith('http') ? `/api/img?url=${encodeURIComponent(imgUrl)}` : imgUrl)
                           : '/placeholder.png';
                         return <img src={src} alt={product.name} style={{width:'100%',height:'100%',objectFit:'cover'}} onError={e => { (e.currentTarget as HTMLImageElement).src = '/placeholder.png'; }} />;
                       })()}
