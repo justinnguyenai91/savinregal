@@ -2,6 +2,8 @@
 FROM node:20-alpine AS deps
 WORKDIR /app
 COPY package.json package-lock.json ./
+# Copy prisma schema trước để postinstall (prisma generate) không bị lỗi
+COPY prisma ./prisma
 RUN npm ci
 
 # ── Stage 2: Build ──
@@ -14,8 +16,9 @@ COPY . .
 # Generate Prisma client
 RUN npx prisma generate
 
-# Build Next.js
+# Build Next.js với standalone mode cho Docker
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV STANDALONE=true
 RUN npm run build
 
 # ── Stage 3: Production ──

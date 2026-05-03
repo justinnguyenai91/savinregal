@@ -67,25 +67,31 @@ export default function ImageUpload({ value, onChange, multiple = false, label =
       {/* Preview */}
       {images.length > 0 && (
         <div className="flex flex-wrap gap-3 mb-3">
-          {images.map((url, i) => (
-            <div key={i} className="relative group">
-              <img
-                src={url}
-                alt={`Upload ${i + 1}`}
-                className="rounded-lg object-cover"
-                style={{ width: '100px', height: '100px', border: '1px solid #E8DDD0' }}
-                onError={e => { (e.currentTarget as HTMLImageElement).src = '/placeholder.png'; }}
-              />
-              <button
-                type="button"
-                onClick={() => removeImage(i)}
-                className="absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity"
-                style={{ background: '#DC2626' }}
-              >
-                ✕
-              </button>
-            </div>
-          ))}
+          {images.map((url, i) => {
+            // Dùng /_next/image để proxy HTTP VPS images qua HTTPS (tránh mixed content)
+            const displayUrl = url.startsWith('http')
+              ? `/_next/image?url=${encodeURIComponent(url)}&w=200&q=75`
+              : url;
+            return (
+              <div key={i} className="relative group">
+                <img
+                  src={displayUrl}
+                  alt={`Upload ${i + 1}`}
+                  className="rounded-lg object-cover"
+                  style={{ width: '100px', height: '100px', border: '1px solid #E8DDD0' }}
+                  onError={e => { (e.currentTarget as HTMLImageElement).src = '/placeholder.png'; }}
+                />
+                <button
+                  type="button"
+                  onClick={() => removeImage(i)}
+                  className="absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity"
+                  style={{ background: '#DC2626' }}
+                >
+                  ✕
+                </button>
+              </div>
+            );
+          })}
         </div>
       )}
 

@@ -60,6 +60,7 @@ export default function AdminProductsPage() {
     origin: 'Kon Tum, Việt Nam', isPublished: true,
     images: [] as string[],
     variants: [] as { name: string; price: string; originalPrice: string; stockQuantity: string }[],
+    rating: '0', reviewCount: '0',
   };
 
   const [form, setForm] = useState(emptyForm);
@@ -113,6 +114,8 @@ export default function AdminProductsPage() {
         originalPrice: v.originalPrice ? String(v.originalPrice) : '',
         stockQuantity: String(v.stockQuantity),
       })),
+      rating: String(product.rating ?? 0),
+      reviewCount: String(product.reviewCount ?? 0),
     });
     setShowForm(true);
   };
@@ -131,6 +134,8 @@ export default function AdminProductsPage() {
         certifications: form.certifications.filter(c => c.trim()),
         ingredients: form.ingredients.filter(i => i.name.trim()),
         images: form.images,
+        rating: parseFloat(form.rating) || 0,
+        reviewCount: parseInt(form.reviewCount) || 0,
         variants: form.variants.filter(v => v.name.trim()).map(v => ({
           name: v.name,
           price: parseFloat(v.price),
@@ -286,6 +291,101 @@ export default function AdminProductsPage() {
               </div>
             ))}
             <button type="button" onClick={() => addListItem('benefits')} className="text-xs text-emerald-600 font-medium">+ Thêm công dụng</button>
+          </div>
+
+          {/* Ingredients */}
+          <div>
+            <div className="flex items-center justify-between mb-2">
+              <label className="text-sm font-medium text-gray-700">🌿 Thành phần hoạt chất</label>
+              <button type="button" onClick={() => setForm({ ...form, ingredients: [...form.ingredients, { name: '', amount: '', description: '' }] })} className="text-xs text-emerald-600 font-medium">+ Thêm thành phần</button>
+            </div>
+            <div className="space-y-2">
+              {form.ingredients.map((ing, i) => (
+                <div key={i} className="grid grid-cols-1 md:grid-cols-3 gap-2">
+                  <input
+                    type="text"
+                    value={ing.name}
+                    onChange={e => { const arr = [...form.ingredients]; arr[i] = { ...arr[i], name: e.target.value }; setForm({ ...form, ingredients: arr }); }}
+                    className="px-3 py-2 border border-gray-200 rounded-lg text-sm"
+                    placeholder="Tên (VD: Saponin)"
+                  />
+                  <input
+                    type="text"
+                    value={ing.amount}
+                    onChange={e => { const arr = [...form.ingredients]; arr[i] = { ...arr[i], amount: e.target.value }; setForm({ ...form, ingredients: arr }); }}
+                    className="px-3 py-2 border border-gray-200 rounded-lg text-sm"
+                    placeholder="Hàm lượng (VD: 52mg)"
+                  />
+                  <div className="flex gap-1">
+                    <input
+                      type="text"
+                      value={ing.description}
+                      onChange={e => { const arr = [...form.ingredients]; arr[i] = { ...arr[i], description: e.target.value }; setForm({ ...form, ingredients: arr }); }}
+                      className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm"
+                      placeholder="Mô tả tác dụng"
+                    />
+                    {form.ingredients.length > 1 && (
+                      <button type="button" onClick={() => setForm({ ...form, ingredients: form.ingredients.filter((_, j) => j !== i) })} className="text-red-400 text-sm px-2">✕</button>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Usage & Warnings */}
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">📖 Hướng dẫn sử dụng</label>
+              <textarea
+                value={form.usage}
+                onChange={e => setForm({ ...form, usage: e.target.value })}
+                rows={4}
+                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm resize-none"
+                placeholder="VD: Ngày dùng 1-2 lần, mỗi lần 2-3g. Dùng với nước ấm hoặc ngậm trực tiếp..."
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">⚠️ Lưu ý / Cảnh báo</label>
+              {form.warnings.map((w, i) => (
+                <div key={i} className="flex gap-2 mb-2">
+                  <input type="text" value={w} onChange={e => updateListItem('warnings', i, e.target.value)} className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm" placeholder="VD: Không dùng cho phụ nữ có thai" />
+                  {form.warnings.length > 1 && (
+                    <button type="button" onClick={() => setForm({ ...form, warnings: form.warnings.filter((_, j) => j !== i) })} className="text-red-400 text-sm px-2">✕</button>
+                  )}
+                </div>
+              ))}
+              <button type="button" onClick={() => addListItem('warnings')} className="text-xs text-emerald-600 font-medium">+ Thêm lưu ý</button>
+            </div>
+          </div>
+
+          {/* Rating & Reviews */}
+          <div>
+            <h3 className="font-semibold text-gray-900 mb-4">⭐ Đánh giá</h3>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Điểm trung bình (0–5)</label>
+                <input
+                  type="number"
+                  min="0" max="5" step="0.1"
+                  value={form.rating}
+                  onChange={e => setForm({ ...form, rating: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm"
+                  placeholder="VD: 4.9"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Số lượng đánh giá</label>
+                <input
+                  type="number"
+                  min="0"
+                  value={form.reviewCount}
+                  onChange={e => setForm({ ...form, reviewCount: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm"
+                  placeholder="VD: 127"
+                />
+              </div>
+            </div>
           </div>
 
           {/* Variants */}

@@ -203,14 +203,14 @@ export default function HomePage() {
                 bg: '#FDF3E7', color: '#C4956A',
               },
             ].map((s, i) => (
-              <div key={i} className="text-center flex flex-col items-center" style={{padding:'2rem 1rem'}}>
-                <div className="mb-4 flex items-center justify-center rounded-2xl" style={{width:'3.5rem',height:'3.5rem',background:s.bg,color:s.color}}>
-                  <span style={{width:'1.6rem',height:'1.6rem',display:'flex'}}>{s.icon}</span>
+              <div key={i} className="text-center flex flex-col items-center" style={{padding:'1.25rem 0.5rem'}}>
+                <div className="mb-3 flex items-center justify-center rounded-2xl" style={{width:'3rem',height:'3rem',background:s.bg,color:s.color}}>
+                  <span style={{width:'1.4rem',height:'1.4rem',display:'flex'}}>{s.icon}</span>
                 </div>
-                <div className="text-2xl md:text-3xl font-heading font-bold" style={{color:'#2C4A3E'}}>
+                <div className="text-xl md:text-2xl lg:text-3xl font-heading font-bold" style={{color:'#2C4A3E'}}>
                   <AnimatedCounter target={s.n} suffix={s.s} />
                 </div>
-                <p className="text-sm mt-1.5" style={{color:'#374151'}}>{s.label}</p>
+                <p className="text-xs md:text-sm mt-1.5 leading-tight" style={{color:'#374151'}}>{s.label}</p>
               </div>
             ))}
           </div>
@@ -223,7 +223,7 @@ export default function HomePage() {
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-heading font-bold" style={{color:'#111714'}}>Danh Mục Sản Phẩm</h2>
             <div className="section-divider" />
-            <p className="mt-4 whitespace-nowrap" style={{color:'#6B7280',fontSize:'0.9375rem'}}>Đa dạng sản phẩm từ Sâm Ngọc Linh, phục vụ mọi nhu cầu chăm sóc sức khỏe</p>
+            <p className="mt-4" style={{color:'#6B7280',fontSize:'0.9375rem'}}>Đa dạng sản phẩm từ Sâm Ngọc Linh, phục vụ mọi nhu cầu chăm sóc sức khỏe</p>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
             {categories.map((cat, i) => {

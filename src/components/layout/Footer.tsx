@@ -134,15 +134,15 @@ export default function Footer() {
 
         {/* ── Bottom Bar ── */}
         <div className="border-t border-white/[0.06]">
-          <div className="container-custom py-5 flex flex-col md:flex-row items-center justify-between gap-3">
+          <div className="container-custom py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
             <p className="text-xs text-white/25">
               © 2026 Savin Regal. Tất cả quyền được bảo lưu.
             </p>
-            <div className="flex items-center gap-4 text-xs text-white/25">
-              <span>Chấp nhận thanh toán:</span>
+            <div className="flex flex-wrap items-center justify-center sm:justify-end gap-2 text-xs text-white/25">
+              <span className="whitespace-nowrap">Chấp nhận thanh toán:</span>
               <div className="flex gap-1.5">
                 {['VNPay', 'MoMo', 'COD'].map(method => (
-                  <span key={method} className="px-2.5 py-1 bg-white/[0.05] rounded text-[10px] font-medium border border-white/[0.06]">{method}</span>
+                  <span key={method} className="px-2.5 py-1 bg-white/[0.05] rounded text-[10px] font-medium border border-white/[0.06] whitespace-nowrap">{method}</span>
                 ))}
               </div>
             </div>

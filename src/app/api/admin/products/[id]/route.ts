@@ -31,6 +31,8 @@ export async function PUT(
         ...(body.certifications && { certifications: JSON.stringify(body.certifications) }),
         ...(body.origin !== undefined && { origin: body.origin }),
         ...(body.isPublished !== undefined && { isPublished: body.isPublished }),
+        ...(body.rating !== undefined && { rating: parseFloat(body.rating) || 0 }),
+        ...(body.reviewCount !== undefined && { reviewCount: parseInt(body.reviewCount) || 0 }),
       },
     });
 

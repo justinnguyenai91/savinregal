@@ -11,7 +11,7 @@ export default function BlogPage() {
         <div className="container-custom relative z-10 text-center">
           <span className="text-xs font-semibold uppercase tracking-[0.2em] mb-3 inline-block" style={{color:'#C4956A'}}>Kiến Thức Sức Khỏe</span>
           <h1 className="text-3xl md:text-4xl font-heading font-bold mb-3" style={{color:'#FFFFFF'}}>Blog Sức Khỏe</h1>
-          <p style={{color:'rgba(255,255,255,0.8)',textAlign:'center',whiteSpace:'nowrap'}}>Kiến thức hữu ích về Sâm Ngọc Linh, thực phẩm chức năng và chăm sóc sức khỏe</p>
+          <p style={{color:'rgba(255,255,255,0.8)',textAlign:'center'}}>Kiến thức hữu ích về Sâm Ngọc Linh, thực phẩm chức năng và chăm sóc sức khỏe</p>
         </div>
       </section>
 

@@ -73,11 +73,11 @@ export default function Header() {
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-3 mx-4">
+          <nav className="hidden md:flex items-center gap-2 lg:gap-3 mx-2 lg:mx-4">
             {navLinks.map(link => (
               <Link key={link.href} href={link.href}
-                className="text-[12px] font-semibold uppercase tracking-wider rounded-full transition-all duration-200"
-                style={{ color: '#2C4A3E', background: '#F0F7F5', border: '1px solid #C5DDD8', letterSpacing: '0.07em', padding: '0.5rem 2rem' }}
+                className="text-[11px] lg:text-[12px] font-semibold uppercase tracking-wider rounded-full transition-all duration-200 whitespace-nowrap"
+                style={{ color: '#2C4A3E', background: '#F0F7F5', border: '1px solid #C5DDD8', letterSpacing: '0.07em', padding: '0.5rem 1rem' }}
                 onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = '#2C4A3E'; (e.currentTarget as HTMLElement).style.color = '#FFFFFF'; (e.currentTarget as HTMLElement).style.borderColor = '#2C4A3E'; }}
                 onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = '#F0F7F5'; (e.currentTarget as HTMLElement).style.color = '#2C4A3E'; (e.currentTarget as HTMLElement).style.borderColor = '#C5DDD8'; }}
               >

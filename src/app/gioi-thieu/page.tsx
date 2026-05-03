@@ -23,13 +23,13 @@ export default function AboutPage() {
                 Hành trình mang <strong style={{ color: '#DFC09A' }}>Quốc Bảo Sâm Ngọc Linh</strong> chính hãng từ đỉnh núi Ngọc Linh, Kon Tum đến mọi gia đình Việt.
               </p>
               {/* Stats */}
-              <div className="flex gap-8 pt-2">
+              <div className="flex flex-wrap gap-5 pt-2 justify-center lg:justify-start">
                 {[
                   { num: '10+', label: 'Năm kinh nghiệm' },
                   { num: '5.000+', label: 'Khách hàng' },
                   { num: '98%', label: 'Hài lòng' },
                 ].map((s, i) => (
-                  <div key={i} className="text-center">
+                  <div key={i} className="text-center min-w-[60px]">
                     <p className="text-2xl font-heading font-bold" style={{ color: '#C4956A' }}>{s.num}</p>
                     <p className="text-xs" style={{ color: 'rgba(255,255,255,0.55)' }}>{s.label}</p>
                   </div>
