@@ -36,6 +36,26 @@ export async function PUT(
       },
     });
 
+    // Sync variants: delete all existing, then recreate from request
+    if (body.variants !== undefined) {
+      await prisma.productVariant.deleteMany({ where: { productId: id } });
+      if (body.variants?.length > 0) {
+        await prisma.productVariant.createMany({
+          data: body.variants
+            .filter((v: { name: string }) => v.name?.trim())
+            .map((v: { name: string; price: number; originalPrice?: number; inStock?: boolean; stockQuantity?: number }, i: number) => ({
+              productId: id,
+              name: v.name,
+              price: parseFloat(String(v.price)),
+              originalPrice: v.originalPrice ? parseFloat(String(v.originalPrice)) : null,
+              inStock: v.inStock !== false,
+              stockQuantity: parseInt(String(v.stockQuantity)) || 0,
+              sortOrder: i + 1,
+            })),
+        });
+      }
+    }
+
     return NextResponse.json({ success: true, product });
   } catch (error) {
     console.error('Product Update Error:', error);

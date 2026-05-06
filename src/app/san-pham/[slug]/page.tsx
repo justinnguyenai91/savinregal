@@ -33,6 +33,8 @@ export default function ProductDetailPage() {
   const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState<'benefits' | 'ingredients' | 'usage' | 'reviews'>('benefits');
+  const [selectedImage, setSelectedImage] = useState(0);
+  const [showLightbox, setShowLightbox] = useState(false);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -110,16 +112,28 @@ export default function ProductDetailPage() {
       <section style={{paddingTop:'2rem',paddingBottom:'2rem',background:'#FAF6EF'}}>
         <div className="container-custom">
           <div className="grid lg:grid-cols-2 gap-10">
-            {/* LEFT: Image */}
+            {/* LEFT: Image Gallery */}
             <div className="space-y-4">
-              <div className="aspect-square bg-white rounded-2xl shadow-sm flex items-center justify-center overflow-hidden" style={{border:'1px solid #E8DDD0'}}>
-                <img src={product.images?.[0] || "/placeholder.png"} alt={product.name} style={{width:'100%',height:'100%',objectFit:'contain'}} />
+              <div
+                className="aspect-square bg-white rounded-2xl shadow-sm flex items-center justify-center overflow-hidden cursor-zoom-in"
+                style={{border:'1px solid #E8DDD0'}}
+                onClick={() => setShowLightbox(true)}
+              >
+                <img src={product.images?.[selectedImage] || product.images?.[0] || "/placeholder.png"} alt={product.name} style={{width:'100%',height:'100%',objectFit:'contain'}} />
               </div>
               {product.images && product.images.length > 1 && (
-                <div className="grid grid-cols-3 gap-3">
-                  {product.images.slice(1, 4).map((img, i) => (
-                    <div key={i} className="aspect-square bg-white rounded-xl shadow-sm flex items-center justify-center cursor-pointer transition-all hover:border-forest-light" style={{border:'1px solid #E8DDD0'}}>
-                      <img src={img} alt="" style={{width:'100%',height:'100%',objectFit:'contain'}} />
+                <div className="grid grid-cols-4 gap-3">
+                  {product.images.slice(0, 4).map((img, i) => (
+                    <div
+                      key={i}
+                      onClick={() => setSelectedImage(i)}
+                      className="aspect-square bg-white rounded-xl shadow-sm flex items-center justify-center cursor-pointer transition-all hover:shadow-md"
+                      style={{
+                        border: selectedImage === i ? '2px solid #2C4A3E' : '1px solid #E8DDD0',
+                        opacity: selectedImage === i ? 1 : 0.75,
+                      }}
+                    >
+                      <img src={img} alt="" style={{width:'100%',height:'100%',objectFit:'contain',borderRadius:'0.65rem'}} />
                     </div>
                   ))}
                 </div>
@@ -415,6 +429,51 @@ export default function ProductDetailPage() {
           Mua ngay
         </Link>
       </div>
+
+      {/* ===== IMAGE LIGHTBOX ===== */}
+      {showLightbox && product.images && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90"
+          onClick={() => setShowLightbox(false)}
+        >
+          {/* Close button */}
+          <button
+            onClick={() => setShowLightbox(false)}
+            className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white text-xl transition-colors"
+          >
+            ✕
+          </button>
+          {/* Prev arrow */}
+          {product.images.length > 1 && (
+            <button
+              onClick={(e) => { e.stopPropagation(); setSelectedImage((selectedImage - 1 + product.images.length) % product.images.length); }}
+              className="absolute left-4 z-10 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white text-2xl transition-colors"
+            >
+              ‹
+            </button>
+          )}
+          {/* Image */}
+          <img
+            src={product.images[selectedImage]}
+            alt={product.name}
+            onClick={(e) => e.stopPropagation()}
+            style={{ maxWidth: '90vw', maxHeight: '90vh', objectFit: 'contain', borderRadius: '8px' }}
+          />
+          {/* Next arrow */}
+          {product.images.length > 1 && (
+            <button
+              onClick={(e) => { e.stopPropagation(); setSelectedImage((selectedImage + 1) % product.images.length); }}
+              className="absolute right-4 z-10 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white text-2xl transition-colors"
+            >
+              ›
+            </button>
+          )}
+          {/* Counter */}
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/70 text-sm">
+            {selectedImage + 1} / {product.images.length}
+          </div>
+        </div>
+      )}
     </>
   );
 }

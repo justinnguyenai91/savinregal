@@ -234,19 +234,19 @@ export default function HomePage() {
                   overlay: 'linear-gradient(to top, rgba(15,40,25,0.88) 0%, rgba(15,40,25,0.3) 60%, transparent 100%)',
                 },
                 {
-                  // Thực Phẩm Chức Năng — trái cây/viên nang nền trắng sáng
+                  // Thực Phẩm Chức Năng — Savin Bee's Honey scenic
                   photo: '/cat-tpcn.jpg',
-                  overlay: 'linear-gradient(to top, rgba(20,50,80,0.9) 0%, rgba(20,50,80,0.45) 55%, rgba(0,0,0,0.15) 100%)',
+                  overlay: 'linear-gradient(to top, rgba(30,20,5,0.92) 0%, rgba(30,20,5,0.55) 50%, rgba(0,0,0,0.25) 100%)',
                 },
                 {
-                  // Rượu Sâm — nền trắng/vàng gold
+                  // Rượu Sâm — Rượu Sâm Savin Regal scenic
                   photo: '/cat-ruou-sam.jpg',
-                  overlay: 'linear-gradient(to top, rgba(60,25,0,0.92) 0%, rgba(60,25,0,0.5) 55%, rgba(0,0,0,0.2) 100%)',
+                  overlay: 'linear-gradient(to top, rgba(20,30,15,0.9) 0%, rgba(20,30,15,0.45) 55%, rgba(0,0,0,0.2) 100%)',
                 },
                 {
-                  // Trà Sâm — nền trắng, lọ xanh đậm
+                  // Trà & Mật Ong — Trà Sâm warm indoor
                   photo: '/cat-tra-mat-ong.jpg',
-                  overlay: 'linear-gradient(to top, rgba(10,35,20,0.92) 0%, rgba(10,35,20,0.5) 55%, rgba(0,0,0,0.2) 100%)',
+                  overlay: 'linear-gradient(to top, rgba(40,25,10,0.92) 0%, rgba(40,25,10,0.5) 55%, rgba(0,0,0,0.2) 100%)',
                 },
               ];
               const cs = cardStyles[i] || cardStyles[0];
